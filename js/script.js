@@ -23,13 +23,33 @@ camera.position.z = 5;
 // gltf loader for models
 const loader = new THREE.GLTFLoader();
 
-// call loader function
-loader.load("../SGmodels/scene.gltf", function(gltf) {
-    scene.add( gltf.scene );
-    //set scale and position of doll
-    gltf.scene.scale.set(.4, .4, .4);
-    gltf.scene.position.set(0, -1, 0);
-});
+// create doll class
+class Doll {
+  constructor() {
+    // call loader function
+    loader.load("../SGmodels/scene.gltf", (gltf) => {
+      scene.add(gltf.scene);
+      //set scale and position of doll
+      gltf.scene.scale.set(0.4, 0.4, 0.4);
+      gltf.scene.position.set(0, -1, 0);
+      this.doll = gltf.scene;
+    });
+  }
+
+  lookBackward() {
+      this.doll.rotation.y = -3.15;
+  }
+
+  lookForward() {
+      this.doll.rotation.y = 0;
+  }
+}
+
+// create new doll object
+let doll = new Doll();
+setTimeout(() => {
+    doll.lookBackward()
+}, 1000);
 
 // automatically animate geometry
 function animate() {
